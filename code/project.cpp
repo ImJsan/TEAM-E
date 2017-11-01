@@ -33,7 +33,7 @@ int main() {
 	}
 
 
-	// Need to find a way to push back the values of nC to the vectors C, following while loop does sort the colums right but compilers is complainging with pushback
+	// Need to find a way to push back the values of nC to the vectors C, following while loop does sort the colums right but compilers is complaining with pushback
 	while(!file.eof()) {
 			getline(file, nC1, ';');
 			// C1.push_back(nC1);
