@@ -15,7 +15,7 @@ int main() {
 	//t.hotCold();
 	//t.tempPerYear(2050);
 	string nC1, nC2, nC3, nC4, nC5, nC6;
-	vector<double> C1, C2, C3, C4, C5, C6;
+	vector<string> C1, C2, C3, C4, C5, C6;
 	string helpString;
 	ifstream file("smhi-opendata_Lund.csv");
 
@@ -37,15 +37,17 @@ int main() {
 	while(!file.eof()) {
 			getline(file, nC1, ';');
 			// C1.push_back(nC1);
-			cout<<nC1;
+			//cout<<nC1;
 
 			getline(file, nC2, ';');
-			// C2.push_back(nC2);
-			cout<<nC2<<endl;
+			C2.push_back(nC2);
+			//cout<<nC2<<endl;
 
 
 			getline(file, nC3, ';');
-			// C3.push_back(nC3);
+			C3.push_back(nC3);
+			cout << nC3 << endl;
+
 
 			getline(file, nC4, ';');
 			// C4.push_back(nC4);
