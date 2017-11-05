@@ -13,12 +13,12 @@ class tempTrender {
 	tempTrender(const char* filePath) {
 		vector<string> Date, Time, Temp, RawDate, RawTime, RawTemp; //vector consisting of strings to store all the values for the columns
 		string helpString; //helpstring to store junk
-        string filter1 = "-06-";//filter string
-        string filter2 = "18:00:00";
+    string filter1 = "-06-";//filter string
+    string filter2 = "18:00:00";
 		// ifstream file("smhi-opendata_Lund.csv");
 		ifstream file(filePath);
 
-		// checks if file is open and proceeds if that is the case
+		//// checks if file is open and proceeds if that is the case
 		if(file.is_open()) {
 			cout<<"File "<<filePath<<" opened \n"<<endl;
 			cout<<"Initializing data extracting and sorting..."<<endl;
@@ -49,16 +49,16 @@ class tempTrender {
 		}
 
 		file.close();
-        for(n=0; n<RawDate.size()+1; n++){ //Loop for each elments in our Rawvectors
+    for(int n=0; n<RawDate.size()+1; n++){ //Loop for each elments in our Rawvectors
 
-            if((RawDate[n].find(filter1) != string::npos)&&(RawTime[n].find(filter2) != string::npos)){ //Cheack if the filter criteria is match
-                Date.push_back(RawDate[n]); //Plugs in the filtered data in a new vector
+    	if((RawDate[n].find(filter1) != string::npos)&&(RawTime[n].find(filter2) != string::npos)){ //Cheack if the filter criteria is match
+      	Date.push_back(RawDate[n]); //Plugs in the filtered data in a new vector
 
-                Time.push_back(RawTime[n]);
+        Time.push_back(RawTime[n]);
 
-                Temp.push_back(RawTemp[n]);
-            }
-        }
+        Temp.push_back(RawTemp[n]);
+      }
+    }
 	}
 
 	~tempTrender() {} //Destructor
