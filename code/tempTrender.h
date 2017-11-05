@@ -11,8 +11,10 @@ using namespace std;
 class tempTrender {
 	public:
 	tempTrender(const char* filePath) {
-		vector<string> Date, Time, Temp; //vector consisting of strings to store all the values for the columns
+		vector<string> Date, Time, Temp, RawDate, RawTime, RawTemp; //vector consisting of strings to store all the values for the columns
 		string helpString; //helpstring to store junk
+        string filter1 = "-06-";//filter string
+        string filter2 = "18:00:00";
 		// ifstream file("smhi-opendata_Lund.csv");
 		ifstream file(filePath);
 
@@ -30,13 +32,13 @@ class tempTrender {
 			while(!file.eof()) {
 				string nDate, nTime, nTemp; //string to temporarily store the values of the columns
 				getline(file, nDate, ';');
-				Date.push_back(nDate);
+				RawDate.push_back(nDate);
 
 				getline(file, nTime, ';');
-				Time.push_back(nTime);
+				RawTime.push_back(nTime);
 
 				getline(file, nTemp, ';');
-				Temp.push_back(nTemp);
+				RawTemp.push_back(nTemp);
 
 			}
 			cout<<"Data extracted \n"<<endl;
@@ -47,6 +49,16 @@ class tempTrender {
 		}
 
 		file.close();
+        for(n=0; n<RawDate.size()+1; n++){ //Loop for each elments in our Rawvectors
+
+            if((RawDate[n].find(filter1) != string::npos)&&(RawTime[n].find(filter2) != string::npos)){ //Cheack if the filter criteria is match
+                Date.push_back(RawDate[n]); //Plugs in the filtered data in a new vector
+
+                Time.push_back(RawTime[n]);
+
+                Temp.push_back(RawTemp[n]);
+            }
+        }
 	}
 
 	~tempTrender() {} //Destructor
