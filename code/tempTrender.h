@@ -5,6 +5,7 @@
 #include <fstream>
 #include <vector>
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
@@ -20,7 +21,7 @@ class tempTrender {
 
 		//// checks if file is open and proceeds if that is the case
 		if(file.is_open()) {
-			cout<<"File "<<filePath<<" opened \n"<<endl;
+			cout<<"File "<<filePath<<" opened"<<endl;
 			cout<<"Initializing data extraction and sorting..."<<endl;
 
 			// until the end of the file read and store the values of each column in it's respective vector.
@@ -49,7 +50,7 @@ class tempTrender {
 
 			file.close();
 			cout<<"Data extracted"<<endl;
-			cout<<"File "<<filePath<<" closed"<<endl;
+			cout<<"File "<<filePath<<" closed \n"<<endl;
 
 			RawDate_ = RawDate;
 			RawTime_ = RawTime;
@@ -82,10 +83,9 @@ class tempTrender {
 		Time_ = Time;
 		Temp_ = Temp;
 		cout<<"Done \n"<<endl;
-		cout<<Date_[1451]<<endl;
 	}; //Make a histogram of the temperature on this day
 
-	void tempOnDay(string monthToCalculate, string dayToCalculate) {
+	void tempOnDayInMonth(string monthToCalculate, string dayToCalculate) {
 		tempForMonth(monthToCalculate);
 		string dayFilter = "-" + dayToCalculate;
 		vector<string> dayDate, dayTemp;
@@ -102,7 +102,30 @@ class tempTrender {
 		cout<<"Done \n"<<endl;
 
 	};
-	//void tempPerDay(); //Make a histogram of the average temperature of each day of the year
+	// Calculating and plotting average temp of all Junes vs temperature of all midsummers
+	void plotJuneVsMidsummer() {
+		// tempForMonth("06");
+		tempOnDayInMonth("06","23");
+		vector<double> tempAvg, midsummerTemp;
+		double helpTemp, helpMidsummerTemp;
+		double tempSum = 0;
+
+		cout<<"Calculating average temperature of June for every year..."<<endl;
+		for (int n = 0; n < Date_.size()/30; n++) {
+			for (int i=0; i < 30; i++) {
+				stringstream(Temp_[i])>>helpTemp;
+				tempSum += helpTemp;
+			}
+			tempAvg.push_back(tempSum/(30));
+		}
+		cout<<"Done \n"<<endl;
+
+		for (int n = 0; n <dayTemp_.size(); n++) {
+			stringstream(dayTemp_[n])>>helpMidsummerTemp;
+			midsummerTemp.push_back(helpMidsummerTemp);
+		}
+		cout<<midsummerTemp.size()<<endl;
+	}; //Make a histogram of the average temperature of each day of the year
 	//void hotCold(); //Make a histogram of the hottest and coldest day of the year
 	//void tempPerYear(int yearToExtrapolate); //Make a histogram of average temperature per year, then fit and extrapolate to the given year
 
@@ -111,7 +134,7 @@ class tempTrender {
 	vector<string> RawDate_, RawTime_, RawTemp_; //membervariable to store RawData
 	string filePath; //Membervariable to store the file path
 	vector<string> Date_, Time_, Temp_; //membervariable to store specific data
-
+	vector<string> dayDate_, dayTemp_;
 
 };
 
