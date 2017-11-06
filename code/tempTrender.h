@@ -13,8 +13,8 @@ class tempTrender {
 	tempTrender(const char* filePath) {
 		vector<string> Date, Time, Temp, RawDate, RawTime, RawTemp; //vector consisting of strings to store all the values for the columns
 		string helpString; //helpstring to store junk
-    string filter1 = "-06-";//filter string
-    string filter2 = "18:00:00";
+    string MonthFilter = "-06-";//filter string
+    string TimeFilter = "18:00:00";
 		// ifstream file("smhi-opendata_Lund.csv");
 		ifstream file(filePath);
 
@@ -49,9 +49,9 @@ class tempTrender {
 		}
 
 		file.close();
-    for(int n=0; n<RawDate.size()+1; n++){ //Loop for each elments in our Rawvectors
+    for(int n=0; n<RawDate.size(); n++){ //Loop for each elments in our Rawvectors
 
-    	if((RawDate[n].find(filter1) != string::npos)&&(RawTime[n].find(filter2) != string::npos)){ //Cheack if the filter criteria is match
+    	if((RawDate[n].find(MonthFilter) != string::npos)&&(RawTime[n].find(TimeFilter) != string::npos)){ //Cheack if the filter criteria is match
       	Date.push_back(RawDate[n]); //Plugs in the filtered data in a new vector
 
         Time.push_back(RawTime[n]);
