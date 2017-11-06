@@ -118,6 +118,31 @@ class tempTrender {
 		cout<<"Done \n"<<endl;
 
 	};
+
+	// Calculating and plotting average temp of all Junes vs temperature of all midsummers
+    void plotJuneVsMidsummer() {
+        // tempForMonth("06");
+        tempOnDayInMonth("06","23");
+        vector<double> tempAvg, midsummerTemp;
+        double helpTemp, helpMidsummerTemp;
+        double tempSum = 0;
+
+        cout<<"Calculating average temperature of June for every year..."<<endl;
+        for (int n = 0; n < Date_.size()/30; n++) {
+            for (int i=0; i < 30; i++) {
+                stringstream(Temp_[i])>>helpTemp;
+                tempSum += helpTemp;
+            }
+            tempAvg.push_back(tempSum/(30));
+        }
+        cout<<"Done \n"<<endl;
+
+        for (int n = 0; n <dayTemp_.size(); n++) {
+            stringstream(dayTemp_[n])>>helpMidsummerTemp;
+            midsummerTemp.push_back(helpMidsummerTemp);
+        }
+        cout<<midsummerTemp.size()<<endl;
+    };
 	//void tempPerDay(); //Make a histogram of the average temperature of each day of the year
 	//void hotCold(); //Make a histogram of the hottest and coldest day of the year
 	//void tempPerYear(int yearToExtrapolate); //Make a histogram of average temperature per year, then fit and extrapolate to the given year
