@@ -65,25 +65,43 @@ class tempTrender {
 	~tempTrender() {} //Destructor
 
 	void tempForMonth(string monthToCalculate) {
-		string filter1 = "-" + monthToCalculate + "-";//filter string
-		string filter2 = "18:00:00";
+		string monthFilter = "-" + monthToCalculate + "-";//filter string
+		string timeFilter = "18:00:00";
 		vector<string> Date, Time, Temp;
 
 		cout<<"Extracting data for month "<<monthToCalculate<<"..."<<endl;
-		for(int n=0; n<RawDate_.size()+1; n++){ //Loop for each elments in our Rawvectors
-			if(RawDate_[n].find(filter1) != string::npos && RawTime_[n].find(filter2) != string::npos){ //Cheack if the filter criteria is match
-				cout<<".";
+		for(int n=0; n<RawDate_.size() + 1; n++){ //Loop for each elments in our Rawvectors
+			if(RawDate_[n].find(monthFilter) != string::npos && RawTime_[n].find(timeFilter) != string::npos){ //Cheack if the filter criteria is match
+
 				Date.push_back(RawDate_[n]); //Plugs in the filtered data in a new vector
-				cout<<Date.size()<<endl;
 				Time.push_back(RawTime_[n]);
-				cout<<Time.size()<<endl;
 				Temp.push_back(RawTemp_[n]);
-				cout<<Temp.size()<<endl;
 			}
 		}
-		cout<<"Done"<<endl;
+		Date_ = Date;
+		Time_ = Time;
+		Temp_ = Temp;
+		cout<<"Done \n"<<endl;
+		cout<<Date_[1451]<<endl;
 	}; //Make a histogram of the temperature on this day
-	void tempOnDay(int dateToCalculate); //Make a histogram of the temperature on this date
+
+	void tempOnDay(string monthToCalculate, string dayToCalculate) {
+		tempForMonth(monthToCalculate);
+		string dayFilter = "-" + dayToCalculate;
+		vector<string> dayDate, dayTemp;
+
+		cout<<"Extracting data from month "<<monthToCalculate<<" for day "<<dayToCalculate<<"..."<<endl;
+		for(int n=0; n<Date_.size();n++) {
+			if(Date_[n].find(dayFilter) != string::npos) {
+				dayDate.push_back(Date_[n]);
+				dayTemp.push_back(Temp_[n]);
+			}
+		}
+		dayDate_ = dayDate;
+		dayTemp_ = dayTemp;
+		cout<<"Done \n"<<endl;
+
+	};
 	//void tempPerDay(); //Make a histogram of the average temperature of each day of the year
 	//void hotCold(); //Make a histogram of the hottest and coldest day of the year
 	//void tempPerYear(int yearToExtrapolate); //Make a histogram of average temperature per year, then fit and extrapolate to the given year
