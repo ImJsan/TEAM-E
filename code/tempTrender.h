@@ -133,24 +133,32 @@ class tempTrender {
 			midsummerTemp.push_back(helpMidsummerTemp);
 		}
 
-		TH1I* histJune = new TH1I("tempAvg", "Average temperature of June", 200, -20, 40);
-		histJune->SetFillColor(kRed + 1);
+		double midsummerAvgTempSum = 0;
+		for (int n= 0; n < midsummerTemp.size(); n++) {
+			midsummerAvgTempSum += midsummerTemp[n];
+		}
+		double midsummerAvgTemp = midsummerAvgTempSum/midsummerTemp.size();
 
-		for (int n = 0; n < tempAvg.size(); n++){
+		// Plotting histogram for average temperature for each in june and temperature for each midsummer
+		TH1I* histJune = new TH1I("tempAvg", "Average temperature of June", 100, 0, 30);
+		histJune->SetFillColor(kWhite);
+
+		TH1I* histMidsummer = new TH1I("tempAvg", "Average temperature of Midsummer", 100, 0, 30);
+		histMidsummer->SetFillColor(4);
+
+		for (int n = 0; n < tempAvg.size() + 1; n++){
 			cout<<tempAvg[n]<<endl;
 			histJune->Fill(tempAvg[n]); //Increment the bin corresponding to -3.2 C
 		}
-		TCanvas* can = new TCanvas();
-		histJune->Draw();
-
-		TH1I* histMidsummer = new TH1I("tempAvg", "Average temperature of Midsummer", 300, -20, 40);
-		histMidsummer->SetFillColor(kBlue + 1);
-
-		for (int n = 0; n < midsummerTemp.size(); n++){
-			cout<<midsummerTemp[n]<<endl;
-			histMidsummer->Fill(midsummerTemp[n]); //Increment the bin corresponding to -3.2 C
+		for (int n = 0; n<56;n++){
+			histMidsummer->Fill(midsummerAvgTemp); //Increment the bin corresponding to -3.2 C
 		}
+		TCanvas* can = new TCanvas();
+		histJune->Fit("gaus");
+		histJune->Draw();
 		histMidsummer->Draw("same");
+
+
 	}; //Make a histogram of the average temperature of each day of the year
 	//void hotCold(); //Make a histogram of the hottest and coldest day of the year
 	//void tempPerYear(int yearToExtrapolate); //Make a histogram of average temperature per year, then fit and extrapolate to the given year
