@@ -4,20 +4,22 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+
+//Root libraries
+#include <TF1.h> // 1d function class
+#include <TH1.h> // 1d histogram classes
+#include <TStyle.h>  // style object
+#include <TMath.h>   // math functions
+#include <TCanvas.h> // canvas object
+
 using namespace std;
 
-int main() {
-	const char* pathToFile = "smhi-opendata_Lund.csv"; //Put the path to your data file here
+void project() {
+	const char* pathToFile = "datasets/smhi-opendata_Visby.csv"; //Put the path to your data file here
 	tempTrender t(pathToFile); //Instantiate your analysis object
-	// t.tempOnDay("06", "23");
 	t.plotJuneVsMidsummer();
+}
 
-	//t.tempOnDay(8, 23); //Call some functions that you've implemented
-	//t.tempOnDay(235);
-	//t.tempPerDay();
-	//t.hotCold();
-	//t.tempPerYear(2050);
-
-
-	return 0;
+void test() {
+	project();
 }

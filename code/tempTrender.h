@@ -7,6 +7,13 @@
 #include <iostream>
 #include <sstream>
 
+//Root libraries
+#include <TF1.h> // 1d function class
+#include <TH1.h> // 1d histogram classes
+#include <TStyle.h>  // style object
+#include <TMath.h>   // math functions
+#include <TCanvas.h> // canvas object
+
 using namespace std;
 
 class tempTrender {
@@ -14,7 +21,7 @@ class tempTrender {
 	tempTrender(const char* filePath) {
 		vector<string> Date, Time, Temp, RawDate, RawTime, RawTemp; //vector consisting of strings to store all the values for the columns
 		string helpString; //helpstring to store junk
-		int n = 0; //variable to store the index of the whileloop
+		int k = 0; //variable to store the index of the whileloop
 
 		ifstream file(filePath);
 		const string filePath_ = filePath; //Storing the filepath into a membervariable
@@ -28,9 +35,9 @@ class tempTrender {
 			while(!file.eof()) {
 
 				//throws the first lines away, junk data
-				if (n < 12) {
+				if (k < 12) {
 					getline(file,helpString);
-					n++;
+					k++;
 					continue;
 				}
 
@@ -45,7 +52,7 @@ class tempTrender {
 				RawTemp.push_back(nTemp);
 
 				getline(file, helpString); //Throws the rest away
-				n++;
+				k++;
 			}
 
 			file.close();
@@ -113,10 +120,11 @@ class tempTrender {
 		cout<<"Calculating average temperature of June for every year..."<<endl;
 		for (int n = 0; n < Date_.size()/30; n++) {
 			for (int i=0; i < 30; i++) {
-				stringstream(Temp_[i])>>helpTemp;
+				stringstream(Temp_[n*i])>>helpTemp;
 				tempSum += helpTemp;
 			}
 			tempAvg.push_back(tempSum/(30));
+			tempSum = 0;
 		}
 		cout<<"Done \n"<<endl;
 
@@ -124,7 +132,25 @@ class tempTrender {
 			stringstream(dayTemp_[n])>>helpMidsummerTemp;
 			midsummerTemp.push_back(helpMidsummerTemp);
 		}
-		cout<<midsummerTemp.size()<<endl;
+
+		TH1I* histJune = new TH1I("tempAvg", "Average temperature of June", 200, -20, 40);
+		histJune->SetFillColor(kRed + 1);
+
+		for (int n = 0; n < tempAvg.size(); n++){
+			cout<<tempAvg[n]<<endl;
+			histJune->Fill(tempAvg[n]); //Increment the bin corresponding to -3.2 C
+		}
+		TCanvas* can = new TCanvas();
+		histJune->Draw();
+
+		TH1I* histMidsummer = new TH1I("tempAvg", "Average temperature of Midsummer", 300, -20, 40);
+		histMidsummer->SetFillColor(kBlue + 1);
+
+		for (int n = 0; n < midsummerTemp.size(); n++){
+			cout<<midsummerTemp[n]<<endl;
+			histMidsummer->Fill(midsummerTemp[n]); //Increment the bin corresponding to -3.2 C
+		}
+		histMidsummer->Draw("same");
 	}; //Make a histogram of the average temperature of each day of the year
 	//void hotCold(); //Make a histogram of the hottest and coldest day of the year
 	//void tempPerYear(int yearToExtrapolate); //Make a histogram of average temperature per year, then fit and extrapolate to the given year
