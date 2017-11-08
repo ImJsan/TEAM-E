@@ -15,8 +15,9 @@
 using namespace std;
 
 void project() {
-	const char* pathToFile = "datasets/smhi-opendata_Lund.csv"; //Put the path to your data file here
+	const char* pathToFile = "datasets/smhi-opendata_Falsterbo.csv"; //Put the path to your data file here
 	tempTrender t(pathToFile); //Instantiate your analysis object
-	//~ t.plotJuneVsMidsummer();
-	t.plotAvergageDayMayJuneJuly();
+	t.plotJuneVsMidsummer();
+	t.plotAvergageDayMayToSep();
+	t.plotMidsummerTemp();
 }

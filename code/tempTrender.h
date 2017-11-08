@@ -127,7 +127,7 @@ class tempTrender {
 			tempAvg.push_back(tempSum/(30));
 			tempSum = 0;
 		}
-		cout<<"Done \n"<<endl;
+		//~ cout<<"Done \n"<<endl;
 
 		for (int n = 0; n <dayTemp_.size(); n++) {
 			stringstream(dayTemp_[n])>>helpMidsummerTemp;
@@ -141,10 +141,10 @@ class tempTrender {
 		double midsummerAvgTemp = midsummerAvgTempSum/midsummerTemp.size();
 
 		// Plotting histogram for average temperature for each in june and temperature for each midsummer
-		TH1I* histJune = new TH1I("tempAvg", "Average temperature of June", 100, 0, 30);
+		TH1I* histJune = new TH1I("tempAvg", "Average temperature of June", 50, 10, 25);
 		histJune->SetFillColor(kWhite);
 
-		TH1I* histMidsummer = new TH1I("tempAvg", "Average temperature of Midsummer", 100, 0, 30);
+		TH1I* histMidsummer = new TH1I("tempAvg", "Average temperature of Midsummer", 50, 10, 25);
 		histMidsummer->SetFillColor(4);
 
 
@@ -163,7 +163,7 @@ class tempTrender {
 
 	}; //Make a histogram of the average temperature of each day of the year
 	
-	void plotAvergageDayMayJuneJuly() {
+	void plotAvergageDayMayToSep() {
 
 		vector<double> averageDayTemp;
 		
@@ -337,11 +337,35 @@ class tempTrender {
 		y[i] = averageDayTemp[i];
 		}		
 		TGraph* graphMayJuneJuly = new TGraph(n, x, y);
+		TCanvas* can2 = new TCanvas();
 		graphMayJuneJuly->Draw("AC*");
 		graphMayJuneJuly->Fit("pol2");
 
 	};
 
+	void plotMidsummerTemp() {
+		tempOnDayInMonth("06","23");
+		
+		vector<double> midsummerTempVec;
+		double helpMidsummerTemp;
+		
+		for (int n = 0; n <dayTemp_.size(); n++) {
+			stringstream(dayTemp_[n])>>helpMidsummerTemp;
+			midsummerTempVec.push_back(helpMidsummerTemp);
+		}
+
+		Int_t n = dayTemp_.size();
+		Double_t x[n], y[n];
+		for(Int_t i=0;i<n;i++){
+			x[i] = i;
+			y[i] = midsummerTempVec[i];
+		}		
+		TGraph* graphMidsummer = new TGraph(n, x, y);
+		TCanvas* can3 = new TCanvas();
+		graphMidsummer->Draw("AC*");
+		graphMidsummer->Fit("pol1");
+	}
+	
 	private:
 
 	vector<string> RawDate_, RawTime_, RawTemp_; //membervariable to store RawData
