@@ -14,6 +14,7 @@
 #include <TMath.h>   // math functions
 #include <TCanvas.h> // canvas object
 #include <TGraph.h>
+#include <TLine.h>
 
 using namespace std;
 
@@ -312,13 +313,26 @@ class tempTrender {
 		Int_t n = dayTemp_.size();
 		Double_t x[n], y[n];
 		for(Int_t i=0;i<n;i++){
-			x[i] = i;
+			x[i] = i+1961;
 			y[i] = midsummerTempVec[i];
 		}		
 		TGraph* graphMidsummer = new TGraph(n, x, y);
 		TCanvas* can3 = new TCanvas();
-		graphMidsummer->Draw("AC*");
+		
+		can3->SetGrid();
+		
+		graphMidsummer->SetFillColor(kBlue+1);
+		graphMidsummer->Draw("AB");
+		
 		graphMidsummer->Fit("pol1");
+		graphMidsummer->GetFunction("pol1")->SetLineColor(kPink);
+		
+		graphMidsummer->GetXaxis()->SetLimits(1961,2015);
+		graphMidsummer->GetXaxis()->SetTitle("Year");
+		graphMidsummer->GetXaxis()->CenterTitle();
+		graphMidsummer->GetYaxis()->SetTitle("Temp");
+		graphMidsummer->GetYaxis()->CenterTitle();
+		TLine *line = new TLine();
 	}
 	
 	private:
