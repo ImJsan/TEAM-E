@@ -27,7 +27,7 @@ class tempTrender {
 		ifstream file(filePath);
 		const string filePath_ = filePath; //Storing the filepath into a membervariable
 
-		//// checks if file is open and proceeds if that is the case
+		// checks if file is open and proceeds if that is the case
 		if(file.is_open()) {
 			cout<<"File "<<filePath<<" opened"<<endl;
 			cout<<"Initializing data extraction and sorting..."<<endl;
@@ -63,7 +63,6 @@ class tempTrender {
 			RawDate_ = RawDate;
 			RawTime_ = RawTime;
 			RawTemp_ = RawTemp;
-
 		}
 
 		else {
@@ -110,6 +109,7 @@ class tempTrender {
 		//~ cout<<"Done \n"<<endl;
 
 	};
+	
 	// Calculating and plotting average temp of all Junes vs temperature of all midsummers
 	void plotJuneVsMidsummer() {
 		// tempForMonth("06");
@@ -140,13 +140,12 @@ class tempTrender {
 		}
 		double midsummerAvgTemp = midsummerAvgTempSum/midsummerTemp.size();
 
-		// Plotting histogram for average temperature for each in june and temperature for each midsummer
+		// Plotting histogram for average temperature for each june and temperature for each midsummer
 		TH1I* histJune = new TH1I("tempAvg", "Average temperature of June", 50, 10, 25);
 		histJune->SetFillColor(kWhite);
 
 		TH1I* histMidsummer = new TH1I("tempAvg", "Average temperature of Midsummer", 50, 10, 25);
 		histMidsummer->SetFillColor(4);
-
 
 		for (int n = 0; n < tempAvg.size() ; n++){
 			cout<<tempAvg[n]<<endl;
@@ -166,50 +165,6 @@ class tempTrender {
 	void plotAvergageDayMayToSep() {
 
 		vector<double> averageDayTemp;
-		
-		//~ for (int n = 5; n<8; n++) {
-			//~ double averageDaySum = 0;
-			//~ char stringNumberMonth[5];
-			//~ string helpStringMonth;
-			//~ sprintf(stringNumberMonth, "%d", n);
-
-			//~ if (n < 10) {
-				//~ string filterZero = "0";
-				//~ helpStringMonth += filterZero + stringNumberMonth;
-			//~ }
-			//~ else {
-				//~ helpStringMonth = stringNumberMonth;
-			//~ }
-			
-			
-			//~ for (int i = 1; i < 28; i++) {
-				//~ char stringNumberDay[5];
-				//~ sprintf(stringNumberDay, "%d", i);
-				//~ string helpStringDay;
-				//~ if (i < 10) {
-					//~ string filterZero = "0";
-					//~ helpStringDay += filterZero + stringNumberDay;
-				//~ }
-				//~ else {
-					//~ helpStringDay = stringNumberDay;
-				//~ }
-			
-				//~ tempOnDayInMonth(helpStringMonth, helpStringDay);
-			
-				//~ for (int k = 0; k <dayTemp_.size(); k++) {
-					//~ double helpDayTemp;
-					//~ stringstream(dayTemp_[k])>>helpDayTemp;
-					//~ averageDaySum += helpDayTemp;
-				//~ }
-
-				//~ averageDayTemp.push_back(averageDaySum/dayTemp_.size());
-			
-				//~ if (averageDayTemp[i] > 50) {
-					//~ cout<<n<<" "<<i<<endl;
-				//~ }
-
-			//~ }
-		//~ }
 		
 		for (int n = 1; n < 32; n++) {
 			double averageDaySum = 0;
