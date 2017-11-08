@@ -142,20 +142,21 @@ class tempTrender {
 		double midsummerAvgTemp = midsummerAvgTempSum/midsummerTemp.size();
 
 		// Plotting histogram for average temperature for each june and temperature for each midsummer
-		TH1I* histJune = new TH1I("tempAvg", "Average temperature of June", 50, 10, 25);
-		histJune->SetFillColor(kWhite);
+		TH1I* histJune = new TH1I("tempAvg", "Average temperature of June", 50, 12, 22);
+		histJune->SetFillColor(kGreen-10);
 
 		TH1I* histMidsummer = new TH1I("tempAvg", "Average temperature of Midsummer", 50, 10, 25);
 		histMidsummer->SetFillColor(4);
 
 		for (int n = 0; n < tempAvg.size() ; n++){
 			cout<<tempAvg[n]<<endl;
-			histJune->Fill(tempAvg[n]); //Increment the bin corresponding to -3.2 C
+			histJune->Fill(tempAvg[n]);
 		}
 		for (int n = 0; n<56;n++){
-			histMidsummer->Fill(midsummerAvgTemp); //Increment the bin corresponding to -3.2 C
+			histMidsummer->Fill(midsummerAvgTemp);
 		}
 		TCanvas* can = new TCanvas();
+		
 		histJune->Fit("gaus");
 		histJune->Draw();
 		histMidsummer->Draw("same");
@@ -294,8 +295,11 @@ class tempTrender {
 		}		
 		TGraph* graphMayJuneJuly = new TGraph(n, x, y);
 		TCanvas* can2 = new TCanvas();
-		graphMayJuneJuly->Draw("AC*");
+		
+		can2->SetGrid();
+		graphMayJuneJuly->Draw("AC");
 		graphMayJuneJuly->Fit("pol2");
+		graphMayJuneJuly->SetLineWidth(2);
 
 	};
 
@@ -332,7 +336,6 @@ class tempTrender {
 		graphMidsummer->GetXaxis()->CenterTitle();
 		graphMidsummer->GetYaxis()->SetTitle("Temp");
 		graphMidsummer->GetYaxis()->CenterTitle();
-		TLine *line = new TLine();
 	}
 	
 	private:
