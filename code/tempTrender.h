@@ -147,7 +147,8 @@ class tempTrender {
 		TH1I* histMidsummer = new TH1I("tempAvg", "Average temperature of Midsummer", 100, 0, 30);
 		histMidsummer->SetFillColor(4);
 
-		for (int n = 0; n < tempAvg.size(); n++){
+
+		for (int n = 0; n < tempAvg.size() ; n++){
 			cout<<tempAvg[n]<<endl;
 			histJune->Fill(tempAvg[n]); //Increment the bin corresponding to -3.2 C
 		}
