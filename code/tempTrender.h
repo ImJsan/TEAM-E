@@ -78,7 +78,7 @@ class tempTrender {
 		string timeFilter = "18:00:00";
 		vector<string> Date, Time, Temp;
 
-		cout<<"Extracting data for month "<<monthToCalculate<<"..."<<endl;
+		//~ cout<<"Extracting data for month "<<monthToCalculate<<"..."<<endl;
 		for(int n=0; n<RawDate_.size() + 1; n++){ //Loop for each elments in our Rawvectors
 			if(RawDate_[n].find(monthFilter) != string::npos && RawTime_[n].find(timeFilter) != string::npos){ //Cheack if the filter criteria is match
 
@@ -90,7 +90,7 @@ class tempTrender {
 		Date_ = Date;
 		Time_ = Time;
 		Temp_ = Temp;
-		cout<<"Done \n"<<endl;
+		//~ cout<<"Done \n"<<endl;
 	}; //Make a histogram of the temperature on this day
 
 	void tempOnDayInMonth(string monthToCalculate, string dayToCalculate) {
@@ -98,7 +98,7 @@ class tempTrender {
 		string dayFilter = "-" + dayToCalculate;
 		vector<string> dayDate, dayTemp;
 
-		cout<<"Extracting data from month "<<monthToCalculate<<" for day "<<dayToCalculate<<"..."<<endl;
+		//~ cout<<"Extracting data from month "<<monthToCalculate<<" for day "<<dayToCalculate<<"..."<<endl;
 		for(int n=0; n<Date_.size();n++) {
 			if(Date_[n].find(dayFilter) != string::npos) {
 				dayDate.push_back(Date_[n]);
@@ -107,7 +107,7 @@ class tempTrender {
 		}
 		dayDate_ = dayDate;
 		dayTemp_ = dayTemp;
-		cout<<"Done \n"<<endl;
+		//~ cout<<"Done \n"<<endl;
 
 	};
 	// Calculating and plotting average temp of all Junes vs temperature of all midsummers
@@ -118,7 +118,7 @@ class tempTrender {
 		double helpTemp, helpMidsummerTemp;
 		double tempSum = 0;
 
-		cout<<"Calculating average temperature of June for every year..."<<endl;
+		//~ cout<<"Calculating average temperature of June for every year..."<<endl;
 		for (int n = 0; n < Date_.size()/30; n++) {
 			for (int i=0; i < 30; i++) {
 				stringstream(Temp_[n*i])>>helpTemp;
@@ -166,6 +166,50 @@ class tempTrender {
 	void plotAvergageDayMayJuneJuly() {
 
 		vector<double> averageDayTemp;
+		
+		//~ for (int n = 5; n<8; n++) {
+			//~ double averageDaySum = 0;
+			//~ char stringNumberMonth[5];
+			//~ string helpStringMonth;
+			//~ sprintf(stringNumberMonth, "%d", n);
+
+			//~ if (n < 10) {
+				//~ string filterZero = "0";
+				//~ helpStringMonth += filterZero + stringNumberMonth;
+			//~ }
+			//~ else {
+				//~ helpStringMonth = stringNumberMonth;
+			//~ }
+			
+			
+			//~ for (int i = 1; i < 28; i++) {
+				//~ char stringNumberDay[5];
+				//~ sprintf(stringNumberDay, "%d", i);
+				//~ string helpStringDay;
+				//~ if (i < 10) {
+					//~ string filterZero = "0";
+					//~ helpStringDay += filterZero + stringNumberDay;
+				//~ }
+				//~ else {
+					//~ helpStringDay = stringNumberDay;
+				//~ }
+			
+				//~ tempOnDayInMonth(helpStringMonth, helpStringDay);
+			
+				//~ for (int k = 0; k <dayTemp_.size(); k++) {
+					//~ double helpDayTemp;
+					//~ stringstream(dayTemp_[k])>>helpDayTemp;
+					//~ averageDaySum += helpDayTemp;
+				//~ }
+
+				//~ averageDayTemp.push_back(averageDaySum/dayTemp_.size());
+			
+				//~ if (averageDayTemp[i] > 50) {
+					//~ cout<<n<<" "<<i<<endl;
+				//~ }
+
+			//~ }
+		//~ }
 		
 		for (int n = 1; n < 32; n++) {
 			double averageDaySum = 0;
@@ -262,8 +306,31 @@ class tempTrender {
 		}
 		averageDayTemp.push_back(averageDaySum/dayTemp_.size());
 	}
+		for (int n = 1; n < 31; n++) {
+			double averageDaySum = 0;
+			char stringNumber[5];
+			sprintf(stringNumber, "%d", n);
+			string helpString;
+			if (n < 10) {
+				string filterZero = "0";
+				helpString += filterZero + stringNumber;
+			}
+			else {
+				helpString = stringNumber;
+			}	
+			
+			tempOnDayInMonth("09", helpString);
+			
+			for (int i = 0; i <dayTemp_.size(); i++) {
+				double helpDayTemp;
+				stringstream(dayTemp_[i])>>helpDayTemp;
+				averageDaySum += helpDayTemp;
+				
+		}
+		averageDayTemp.push_back(averageDaySum/dayTemp_.size());
+	}
 
-		Int_t n = 123;
+		Int_t n = 153;
 		Double_t x[n], y[n];
 		for(Int_t i=0;i<n;i++){
 		x[i] = i;
@@ -271,13 +338,7 @@ class tempTrender {
 		}		
 		TGraph* graphMayJuneJuly = new TGraph(n, x, y);
 		graphMayJuneJuly->Draw("AC*");
-
-		//~ for (int n = 0; n < averageDayTemp.size(); n++){
-			//~ cout<<n<<" "<<averageDayTemp[n]<<endl;
-			//~ graphMayJuneJuly->Draw(averageDayTemp[n]); //Increment the bin corresponding to -3.2 C
-		//~ }
-
-		//~ TCanvas* can = new TCanvas();
+		graphMayJuneJuly->Fit("pol2");
 
 	};
 
