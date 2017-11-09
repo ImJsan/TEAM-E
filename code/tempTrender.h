@@ -13,8 +13,9 @@
 #include <TStyle.h>  // style object
 #include <TMath.h>   // math functions
 #include <TCanvas.h> // canvas object
-#include <TGraph.h>
-#include <TLine.h>
+#include <TGraph.h> //Graph object
+#include <TLine.h>	//Line properties
+#include <TLegend.h> //Legend object
 
 using namespace std;
 
@@ -144,9 +145,11 @@ class tempTrender {
 		// Plotting histogram for average temperature for each june and temperature for each midsummer
 		TH1I* histJune = new TH1I("tempAvg", "Average temperature of June", 50, 12, 22);
 		histJune->SetFillColor(kGreen-10);
+		histJune->SetLineColor(kBlack);
 
 		TH1I* histMidsummer = new TH1I("tempAvg", "Average temperature of Midsummer", 50, 10, 25);
-		histMidsummer->SetFillColor(4);
+		histMidsummer->SetFillColor(kRed+1);
+		histMidsummer->SetLineColor(kBlack);
 
 		for (int n = 0; n < tempAvg.size() ; n++){
 			cout<<tempAvg[n]<<endl;
@@ -158,8 +161,23 @@ class tempTrender {
 		TCanvas* can = new TCanvas();
 		
 		histJune->Fit("gaus");
+		histJune->GetFunction("gaus")->SetLineColor(kBlack);
 		histJune->Draw();
 		histMidsummer->Draw("same");
+		
+		TLegend* legend1 = new TLegend(0.6,0.75,0.95,0.95);
+		legend1->AddEntry(histJune, "June", "f");
+		legend1->AddEntry(histJune, "Gaussian fit of June", "l");
+		legend1->AddEntry(histMidsummer, "Midsummer", "f");
+		legend1->SetHeader("Average temp of June vs Midsummer");
+		legend1->Draw();
+		
+		histJune->GetXaxis()->SetTitle("Temp/#circ C");
+		histJune->GetXaxis()->CenterTitle();
+		histJune->GetYaxis()->SetTitle("Bins");
+		histJune->GetYaxis()->CenterTitle();
+		
+		can->SaveAs("LundJuneVsMidsummer.png");
 
 
 	}; //Make a histogram of the average temperature of each day of the year
@@ -288,18 +306,41 @@ class tempTrender {
 	}
 
 		Int_t n = 153;
-		Double_t x[n], y[n];
+		Double_t x[n], y[n], x2[n], y2[n];
 		for(Int_t i=0;i<n;i++){
-		x[i] = i;
-		y[i] = averageDayTemp[i];
+			x[i] = i;
+			y[i] = averageDayTemp[i];
+			
+			if(i == 31 || i == 61 || i == 92 || i == 123 || i == 153) {
+				x2[i] = i;
+				y2[i] = 12;
+			}
+			else {
+			x2[i] = i;
+			y2[i] = 0;
+			}
 		}		
 		TGraph* graphMayJuneJuly = new TGraph(n, x, y);
+		TGraph* graphDivider = new TGraph(n, x2, y2);
 		TCanvas* can2 = new TCanvas();
 		
-		can2->SetGrid();
 		graphMayJuneJuly->Draw("AC");
+		graphDivider->Draw("LF2");
 		graphMayJuneJuly->Fit("pol2");
+		graphMayJuneJuly->GetFunction("pol2")->SetLineColor(kRed);
 		graphMayJuneJuly->SetLineWidth(2);
+		
+		TLegend* legend1 = new TLegend(0.60,0.8,0.95,0.95);
+		legend1->AddEntry(graphMayJuneJuly, "Temperature May-Sep", "l");
+		legend1->SetHeader("Daily Temperature from May to September");
+		legend1->Draw();
+		
+		graphMayJuneJuly->GetXaxis()->SetTitle("Day");
+		graphMayJuneJuly->GetXaxis()->CenterTitle();
+		graphMayJuneJuly->GetYaxis()->SetTitle("Temp/#circ C");
+		graphMayJuneJuly->GetYaxis()->CenterTitle();
+		
+		can2->SaveAs("LundMayToSep.png");
 
 	};
 
@@ -325,17 +366,26 @@ class tempTrender {
 		
 		can3->SetGrid();
 		
-		graphMidsummer->SetFillColor(kBlue+1);
+		graphMidsummer->SetFillColor(kRed+1);
+		graphMidsummer->SetLineColor(kBlack);
 		graphMidsummer->Draw("AB");
 		
 		graphMidsummer->Fit("pol1");
-		graphMidsummer->GetFunction("pol1")->SetLineColor(kPink);
+		graphMidsummer->GetFunction("pol1")->SetLineColor(kBlack);
+		
+		TLegend* legend1 = new TLegend(0.6,0.75,0.95,0.95);
+		legend1->AddEntry(graphMidsummer, "Midsummer", "f");
+		legend1->AddEntry(graphMidsummer, "Linear fit of Midsummer", "l");
+		legend1->SetHeader("Temperature of Midsummer each year");
+		legend1->Draw();
 		
 		graphMidsummer->GetXaxis()->SetLimits(1961,2015);
 		graphMidsummer->GetXaxis()->SetTitle("Year");
 		graphMidsummer->GetXaxis()->CenterTitle();
-		graphMidsummer->GetYaxis()->SetTitle("Temp");
+		graphMidsummer->GetYaxis()->SetTitle("Temp/#circ C");
 		graphMidsummer->GetYaxis()->CenterTitle();
+		
+		can3->SaveAs("LundMidsummer.png");
 	}
 	
 	private:

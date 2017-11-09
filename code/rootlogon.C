@@ -1,5 +1,5 @@
 void rootlogon() {
-  gStyle->SetOptStat(01); //Let's make our plots look a bit better. Get rid of the stat box
+  gStyle->SetOptStat(0); //Let's make our plots look a bit better. Get rid of the stat box
   gStyle->SetOptTitle(0); //Get rid of the title (good plots use legends instead)
   gStyle->SetTitleSize(0.05, "x"); //Use bigger text on the axes
   gStyle->SetTitleSize(0.05, "y");

@@ -36,6 +36,7 @@
 ./project_cpp.so: /usr/include/root/TAttBBox2D.h /usr/include/root/TPoint.h
 ./project_cpp.so: /usr/include/root/TAttCanvas.h
 ./project_cpp.so: /usr/include/root/TCanvasImp.h /usr/include/root/TGraph.h
-./project_cpp.so: /usr/include/root/TLine.h
+./project_cpp.so: /usr/include/root/TLine.h /usr/include/root/TLegend.h
+./project_cpp.so: /usr/include/root/TPave.h /usr/include/root/TBox.h
 ./project_cpp.so: /usr/include/root/cintdictversion.h /usr/include/root/RVersion.h
 project_cpp__ROOTBUILDVERSION= 5.34/30
