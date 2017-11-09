@@ -1,0 +1,13 @@
+okt 31: Fredrik - Created the git repository for the Team.
+nov 4:  Anton+Robin - Added all the starting files and started on a sorting algorithm.
+nov 5: Fredrik - Fixed the problem we had with push_back the data.
+nov 6: Anton - Moved the data extraction to condtructor of tempTrender(extracts date, time, temp) and fixed fileToPath.
+nov 6: Robin - Added the filter to the algorithm to filter out the data we want to analyse.
+nov 6: Robin - Created an Overleaf (LaTeX) doc.
+nov 7: Anton - Created function to gather data for a specific month (june)  and for specific day (midsummer)
+nov 7: Anton - Got rootlogon to work. Moved dataset to another location for easier access.
+nov 8: Robin + Anton - Generated plots for june/midsummer + summer months
+nov 8: Fredrik - Modified the plots to look much better and created plot for midsummers true the years.
+nov 8: Fredrik - Cleaned up unneccesary lines of code and made it more compact.
+nov 9: Robin - Started writing the rapport in LaTeX
+nov 9: Anton - Put legends in the plots
